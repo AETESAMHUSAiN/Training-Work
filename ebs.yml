@@ -1,0 +1,24 @@
+---
+Resources:
+  MyEC2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: ami-0cd3dfa4e37921605
+      InstanceType: t2.micro
+
+  MyEBSVolume:
+    Type: AWS::EC2::Volume
+    Properties:
+      AvailabilityZone: !GetAtt MyEC2Instance.AvailabilityZone
+      VolumeType: io1
+      Size: 100
+      Iops: 100
+
+  MountPoint:
+    Type: AWS::EC2::VolumeAttachment
+    Properties: 
+      Device: /dev/sdh
+      InstanceId: 
+        Ref: MyEC2Instance
+      VolumeId: 
+        Ref: MyEBSVolume
