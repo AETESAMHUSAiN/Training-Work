@@ -4,3 +4,46 @@ To Run AWS CDK File
 3. Run command : cdk synth (It will genrate the cnf template or it will convert the python code into cnf template)
 4. Run command : cdk deploy (It will deploy the cnf template and create the stack)
 5. Run command : cdk destroy (It will delete the stack)
+
+
+
+To create the lambda function using aws cdk 
+1. Run command : cdk init sample-app -l python ()
+2. Run command : pip install -r requrements.txt 
+3. Run command : cdk ls (To chk the errors in the file)
+4. Run command : mkdir lambda (Create lambda directroy in the root of project tree)
+5. Run command : lambda/hello.py (write the lambda file in hello.py)
+   import json
+
+def handler(event, context):
+    print('request: {}'.format(json.dumps(event)))
+    return {
+        'statusCode': 200,
+        'headers': {
+            'Content-Type': 'text/plain'
+        },
+        'body': 'Hello, CDK! You have hit {}\n'.format(event['path'])
+    }
+
+6. Go to cdk_workshop/cdk_workshop_stack.py and chande the file 
+    from constructs import Construct
+from aws_cdk import (
+    Stack,
+    aws_lambda as _lambda,
+)
+
+class CdkWorkshopStack(Stack):
+
+    def __init__(self, scope: Construct, id: str, **kwargs) -> None:
+        super().__init__(scope, id, **kwargs)
+
+        # Defines an AWS Lambda resource
+        my_lambda = _lambda.Function(
+            self, 'HelloHandler',
+            runtime=_lambda.Runtime.PYTHON_3_7,
+            code=_lambda.Code.from_asset('lambda'),
+            handler='hello.handler',
+        )
+
+7. Run command : cdk diff (To chk the changes in the file)
+8. Run command : cdk deploy (It will deploy the cnf template and create the stack)
