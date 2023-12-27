@@ -1,0 +1,6 @@
+To Run AWS CDK File 
+1. Make chnages in the file
+2. Run command : cdk ls (To chk the errors in the file)
+3. Run command : cdk synth (It will genrate the cnf template or it will convert the python code into cnf template)
+4. Run command : cdk deploy (It will deploy the cnf template and create the stack)
+5. Run command : cdk destroy (It will delete the stack)
